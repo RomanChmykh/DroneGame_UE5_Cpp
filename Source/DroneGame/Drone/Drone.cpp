@@ -38,6 +38,10 @@ void ADrone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FRotator CameraRotator = ADrone::CameraComponent->GetComponentRotation();
+	FRotator NewRotator = FRotator(CameraRotator.Pitch, CameraRotator.Yaw, ADrone::BoxComponent->GetComponentRotation().Roll);
+	ADrone::BoxComponent->SetWorldRotation(NewRotator);
+
 }
 
 // Called to bind functionality to input
@@ -75,10 +79,12 @@ void ADrone::MoveDown(float Amount)
 void ADrone::LookX(float Amount)
 {
 	AddControllerYawInput(Amount);
+	
 }
 
 void ADrone::LookY(float Amount)
 {
 	AddControllerPitchInput(Amount);
+
 }
 
