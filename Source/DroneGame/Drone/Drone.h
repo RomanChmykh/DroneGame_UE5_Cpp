@@ -49,4 +49,6 @@ private:
 	void MoveRightLeft(float Amount);
 	void MoveUp(float Amount);
 	void MoveDown(float Amount);
+	void LookX(float Amount);
+	void LookY(float Amount);
 };

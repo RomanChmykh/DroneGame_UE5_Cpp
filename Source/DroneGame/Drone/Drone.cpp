@@ -48,7 +48,8 @@ void ADrone::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("MoveRightLeft", this, &ADrone::MoveRightLeft);
 	PlayerInputComponent->BindAxis("MoveUp", this, &ADrone::MoveUp);
 	PlayerInputComponent->BindAxis("MoveDown", this, &ADrone::MoveDown);
-	
+	PlayerInputComponent->BindAxis("LookX", this, &ADrone::LookX);
+	PlayerInputComponent->BindAxis("LookY", this, &ADrone::LookY);
 }
 
 void ADrone::MoveForwardBack(float Amount)
@@ -69,5 +70,15 @@ void ADrone::MoveUp(float Amount)
 void ADrone::MoveDown(float Amount)
 {
 	AddMovementInput(GetActorUpVector(), Amount);
+}
+
+void ADrone::LookX(float Amount)
+{
+	AddControllerYawInput(Amount);
+}
+
+void ADrone::LookY(float Amount)
+{
+	AddControllerPitchInput(Amount);
 }
 
