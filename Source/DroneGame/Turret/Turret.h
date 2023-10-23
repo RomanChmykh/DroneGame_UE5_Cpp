@@ -42,6 +42,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Parameters")
 	float ShootingInterval = 0.2f;
 
+
 public:	
 	
 	virtual void Tick(float DeltaTime) override;
@@ -49,9 +50,12 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+protected:
+	void Shoot();
+
 	UFUNCTION()
 	void SeeDrone(APawn* SeeDrone);
 
-protected:
-	void Shoot();
+private:
+	
 };

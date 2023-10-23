@@ -30,7 +30,8 @@ ADrone::ADrone()
 void ADrone::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Healht = MaxHealht;
 }
 
 // Called every frame

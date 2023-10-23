@@ -17,8 +17,9 @@ class DRONEGAME_API ADrone : public APawn
 	GENERATED_BODY()
 
 public:
-	
 	ADrone();
+	float GetHealht() const { return Healht; }
+	float GetAmmo() const { return Ammo; }
 
 protected:
 	
@@ -39,6 +40,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Parameters")
 	TSubclassOf<AActor> SpawnBullet;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Healht")
+	float MaxHealht = 100.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
+	float MaxAmmo = 50.0;
+
 public:	
 	
 	virtual void Tick(float DeltaTime) override;
@@ -55,4 +62,8 @@ private:
 	void LookX(float Amount);
 	void LookY(float Amount);
 	void Shoot();
+
+private:
+	float Healht = 0.0f;
+	float Ammo = 0.0f;
 };
