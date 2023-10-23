@@ -36,6 +36,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UFloatingPawnMovement* FloatingPawnMovement;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Parameters")
+	TSubclassOf<AActor> SpawnBullet;
+
 public:	
 	
 	virtual void Tick(float DeltaTime) override;
@@ -51,4 +54,5 @@ private:
 	void MoveDown(float Amount);
 	void LookX(float Amount);
 	void LookY(float Amount);
+	void Shoot();
 };

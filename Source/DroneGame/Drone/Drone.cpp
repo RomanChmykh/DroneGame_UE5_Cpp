@@ -54,6 +54,7 @@ void ADrone::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("MoveDown", this, &ADrone::MoveDown);
 	PlayerInputComponent->BindAxis("LookX", this, &ADrone::LookX);
 	PlayerInputComponent->BindAxis("LookY", this, &ADrone::LookY);
+	PlayerInputComponent->BindAction("Shoot", IE_Pressed, this, &ADrone::Shoot);
 }
 
 void ADrone::MoveForwardBack(float Amount)
@@ -79,12 +80,16 @@ void ADrone::MoveDown(float Amount)
 void ADrone::LookX(float Amount)
 {
 	AddControllerYawInput(Amount);
-	
 }
 
 void ADrone::LookY(float Amount)
 {
 	AddControllerPitchInput(Amount);
-
 }
+
+void ADrone::Shoot()
+{
+	GetWorld()->SpawnActor<AActor>(SpawnBullet, this->CameraComponent->GetComponentLocation(), GetActorRotation());
+}
+
 
