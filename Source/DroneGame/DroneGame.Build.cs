@@ -12,7 +12,7 @@ public class DroneGame : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-		PublicIncludePaths.AddRange(new string[] { "DroneGame/Turret" });
+		PublicIncludePaths.AddRange(new string[] { "DroneGame/Turret", "DroneGame/Drone" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

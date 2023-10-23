@@ -2,6 +2,7 @@
 
 
 #include "Turret.h"
+#include "DroneGame/Drone/Drone.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/ArrowComponent.h"
@@ -23,6 +24,7 @@ ATurret::ATurret()
 	ArrowComponent->SetupAttachment(StaticMeshComponent);
 
 	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComponent");
+	PawnSensingComponent->OnSeePawn.AddDynamic(this, &ATurret::SeeDrone);
 }
 
 // Called when the game starts or when spawned
@@ -44,5 +46,22 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ATurret::SeeDrone(APawn* SeeDrone)
+{
+	const ADrone* Drone = Cast<ADrone>(SeeDrone);
+	if(Drone)
+	{
+		const FVector DroneLocation = Drone->GetActorLocation();
+
+		const FVector TurretLocation = this->GetActorLocation();
+		const FVector DirectionToDrone = (DroneLocation - TurretLocation).GetSafeNormal();
+
+		const FRotator TurretRotation = FRotationMatrix::MakeFromX(DirectionToDrone).Rotator();
+
+		this->SetActorRotation(TurretRotation);
+
+	}
 }
 
