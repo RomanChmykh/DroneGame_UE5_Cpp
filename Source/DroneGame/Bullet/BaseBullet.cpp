@@ -17,9 +17,12 @@ ABaseBullet::ABaseBullet()
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
 	SphereComponent->SetupAttachment(GetRootComponent());
+	
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
 	StaticMeshComponent->SetupAttachment(SphereComponent);
+	
+
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
 	ProjectileMovementComponent->InitialSpeed = 1500.0f;
@@ -30,7 +33,9 @@ ABaseBullet::ABaseBullet()
 void ABaseBullet::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	//Set life time for bullet
+	SetLifeSpan(LifeTime);
 }
 
 

@@ -3,11 +3,13 @@
 
 #include "Turret.h"
 #include "DroneGame/Drone/Drone.h"
+#include "DroneGame/Bullet/BaseBullet.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Perception/PawnSensingComponent.h"
 #include "GameFramework/Pawn.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATurret::ATurret()
@@ -19,6 +21,7 @@ ATurret::ATurret()
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
 	StaticMeshComponent->SetupAttachment(GetRootComponent());
+
 
 	ArrowComponent = CreateDefaultSubobject<UArrowComponent>("ArrowComponent");
 	ArrowComponent->SetupAttachment(StaticMeshComponent);
@@ -48,6 +51,12 @@ void ATurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATurret::Shoot()
+{
+	GetWorld()->SpawnActor<AActor>(SpawnBullet, this->ArrowComponent->GetComponentLocation(), GetActorRotation());
+}
+
+
 void ATurret::SeeDrone(APawn* SeeDrone)
 {
 	const ADrone* Drone = Cast<ADrone>(SeeDrone);
@@ -57,11 +66,13 @@ void ATurret::SeeDrone(APawn* SeeDrone)
 
 		const FVector TurretLocation = this->GetActorLocation();
 		const FVector DirectionToDrone = (DroneLocation - TurretLocation).GetSafeNormal();
-
 		const FRotator TurretRotation = FRotationMatrix::MakeFromX(DirectionToDrone).Rotator();
 
 		this->SetActorRotation(TurretRotation);
 
+		//Do delay after each shot
+		FTimerHandle ShootTimerHandle;
+		GetWorldTimerManager().SetTimer(ShootTimerHandle, this, &ATurret::Shoot, ShootingInterval, false);
 	}
 }
 

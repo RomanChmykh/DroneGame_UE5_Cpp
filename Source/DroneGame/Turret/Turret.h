@@ -36,6 +36,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UPawnSensingComponent* PawnSensingComponent;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Parameters")
+	TSubclassOf<AActor> SpawnBullet;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Parameters")
+	float ShootingInterval = 0.2f;
+
 public:	
 	
 	virtual void Tick(float DeltaTime) override;
@@ -45,4 +51,7 @@ public:
 
 	UFUNCTION()
 	void SeeDrone(APawn* SeeDrone);
+
+protected:
+	void Shoot();
 };

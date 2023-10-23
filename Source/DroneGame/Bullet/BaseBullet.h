@@ -36,6 +36,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UProjectileMovementComponent* ProjectileMovementComponent;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = "Parameters")
+	float LifeTime = 5.0f;
+
 public:	
 	
 	virtual void Tick(float DeltaTime) override;
