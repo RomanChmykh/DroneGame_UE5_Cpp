@@ -62,17 +62,20 @@ void ATurret::SeeDrone(APawn* SeeDrone)
 	const ADrone* Drone = Cast<ADrone>(SeeDrone);
 	if(Drone)
 	{
-		const FVector DroneLocation = Drone->GetActorLocation();
+		if (!(Drone->GetIsDead()))
+		{
+			const FVector DroneLocation = Drone->GetActorLocation();
 
-		const FVector TurretLocation = this->GetActorLocation();
-		const FVector DirectionToDrone = (DroneLocation - TurretLocation).GetSafeNormal();
-		const FRotator TurretRotation = FRotationMatrix::MakeFromX(DirectionToDrone).Rotator();
+			const FVector TurretLocation = this->GetActorLocation();
+			const FVector DirectionToDrone = (DroneLocation - TurretLocation).GetSafeNormal();
+			const FRotator TurretRotation = FRotationMatrix::MakeFromX(DirectionToDrone).Rotator();
 
-		this->SetActorRotation(TurretRotation);
+			this->SetActorRotation(TurretRotation);
 
-		//Do delay after each shot
-		FTimerHandle ShootTimerHandle;
-		GetWorldTimerManager().SetTimer(ShootTimerHandle, this, &ATurret::Shoot, ShootingInterval, false);
+			//Do delay after each shot
+			FTimerHandle ShootTimerHandle;
+			GetWorldTimerManager().SetTimer(ShootTimerHandle, this, &ATurret::Shoot, ShootingInterval, false);
+		}
 	}
 }
 
