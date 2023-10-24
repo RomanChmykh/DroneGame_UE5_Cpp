@@ -18,7 +18,11 @@ class DRONEGAME_API ADrone : public APawn
 
 public:
 	ADrone();
+
+	UFUNCTION(BlueprintCallable, Category="Healht")
 	float GetHealht() const { return Healht; }
+
+	UFUNCTION(BlueprintCallable, Category = "Ammo")
 	float GetAmmo() const { return Ammo; }
 
 protected:
@@ -62,6 +66,9 @@ private:
 	void LookX(float Amount);
 	void LookY(float Amount);
 	void Shoot();
+
+	UFUNCTION()
+	void GetDamageFromBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 private:
 	float Healht = 0.0f;

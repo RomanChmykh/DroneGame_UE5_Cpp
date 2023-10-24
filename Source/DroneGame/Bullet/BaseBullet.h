@@ -46,6 +46,8 @@ public:
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	float GetDamageValue() const { return Damage; }
+
 
 protected:
 

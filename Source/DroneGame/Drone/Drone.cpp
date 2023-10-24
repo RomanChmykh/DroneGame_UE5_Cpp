@@ -2,6 +2,7 @@
 
 
 #include "Drone.h"
+#include "DroneGame/Bullet/BaseBullet.h"
 #include "Components/BoxComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -16,6 +17,7 @@ ADrone::ADrone()
 
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComponent");
 	RootComponent = BoxComponent;
+	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ADrone::GetDamageFromBullet);
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComponent->SetupAttachment(GetRootComponent());
@@ -32,6 +34,7 @@ void ADrone::BeginPlay()
 	Super::BeginPlay();
 
 	Healht = MaxHealht;
+	Ammo = MaxAmmo;
 }
 
 // Called every frame
@@ -90,7 +93,28 @@ void ADrone::LookY(float Amount)
 
 void ADrone::Shoot()
 {
-	GetWorld()->SpawnActor<AActor>(SpawnBullet, this->CameraComponent->GetComponentLocation(), GetActorRotation());
+	if (Ammo > 0)
+	{
+		GetWorld()->SpawnActor<AActor>(SpawnBullet, this->CameraComponent->GetComponentLocation(), GetActorRotation());
+		Ammo--;
+	}
+}
+
+//its event when bullet BeginOverLap drone
+void ADrone::GetDamageFromBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	ABaseBullet* BulletThatDamage = Cast<ABaseBullet>(OtherActor);
+
+	if (BulletThatDamage)
+	{
+		float HealhtAfterDamage = this->GetHealht() - BulletThatDamage->GetDamageValue();
+
+		if (HealhtAfterDamage >= 0.0f)
+		{
+			this->Healht = HealhtAfterDamage;
+		}
+	}
 }
 
 
