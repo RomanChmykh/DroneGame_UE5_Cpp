@@ -3,6 +3,7 @@
 
 #include "BasePickUp.h"
 #include "Components/SphereComponent.h"
+#include "Components/StaticMeshComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBasePickUp, All, All)
 
@@ -15,6 +16,9 @@ ABasePickUp::ABasePickUp()
 	SphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	SetRootComponent(SphereComponent);
+
+	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
+	StaticMeshComponent->SetupAttachment(SphereComponent);
 }
 
 void ABasePickUp::BeginPlay()

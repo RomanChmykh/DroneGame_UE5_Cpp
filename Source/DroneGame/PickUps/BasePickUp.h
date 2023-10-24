@@ -7,6 +7,7 @@
 #include "BasePickUp.generated.h"
 
 class USphereComponent;
+class UStaticMeshComponent;
 
 UCLASS()
 class DRONEGAME_API ABasePickUp : public AActor
@@ -21,6 +22,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USphereComponent* SphereComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UStaticMeshComponent* StaticMeshComponent;
 
 public:	
 	// Called every frame
