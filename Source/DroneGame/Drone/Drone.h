@@ -22,8 +22,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Healht")
 	float GetHealht() const { return Healht; }
 
+	UFUNCTION(BlueprintCallable, Category = "Healht")
+	bool GetIsDead() const { return IsDead; }
+
 	UFUNCTION(BlueprintCallable, Category = "Ammo")
 	float GetAmmo() const { return Ammo; }
+
 
 protected:
 	
@@ -73,4 +77,5 @@ private:
 private:
 	float Healht = 0.0f;
 	float Ammo = 0.0f;
+	bool IsDead = false;
 };
