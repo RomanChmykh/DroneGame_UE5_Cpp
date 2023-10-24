@@ -1,9 +1,9 @@
 #include "AmmoPickUp.h"
+#include "Drone.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogAmmoPickup, All, All)
 
-bool AAmmoPickUp::GivePickupTo(APawn* Drone)
+bool AAmmoPickUp::GivePickupTo(ADrone* Pawn)
 {
-	UE_LOG(LogAmmoPickup, Error, TEXT("AmmoPickUp wastaken"));
+	
 	return true;
 }

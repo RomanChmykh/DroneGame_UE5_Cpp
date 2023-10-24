@@ -19,14 +19,19 @@ class DRONEGAME_API ADrone : public APawn
 public:
 	ADrone();
 
-	UFUNCTION(BlueprintCallable, Category="Healht")
+	UFUNCTION(BlueprintCallable)
 	float GetHealht() const { return Healht; }
 
-	UFUNCTION(BlueprintCallable, Category = "Healht")
+	float GetMaxHealht() const { return MaxHealht; }
+	void  SetHealht(float HealthValue) { Healht = HealthValue; }
+
+	UFUNCTION(BlueprintCallable)
 	bool GetIsDead() const { return IsDead; }
 
-	UFUNCTION(BlueprintCallable, Category = "Ammo")
+	UFUNCTION(BlueprintCallable)
 	float GetAmmo() const { return Ammo; }
+	float GetMaxAmmo() const { return MaxAmmo; }
+	void SetAmmo(float AmmoValue) { Ammo = AmmoValue; }
 
 
 protected:

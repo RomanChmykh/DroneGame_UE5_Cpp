@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BasePickUp.generated.h"
 
+class ADrone;
 class USphereComponent;
 class UStaticMeshComponent;
 
@@ -36,7 +37,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	virtual bool GivePickupTo(APawn* Drone);
+	virtual bool GivePickupTo(ADrone* Pawn);
 	void PickupWasTaken();
 	void RespawnPickup();
 };

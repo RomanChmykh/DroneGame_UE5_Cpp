@@ -1,9 +1,23 @@
 #include "HealthPickUp.h"
+#include "Drone.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogHealthPickup, All, All)
 
-bool AHealthPickUp::GivePickupTo(APawn* Drone)
+bool AHealthPickUp::GivePickupTo(ADrone* Pawn)
 {
-	UE_LOG(LogHealthPickup, Error, TEXT("HealthPickUp was taken"));
-	return true;
+	if (!(Pawn->GetIsDead()) && FMath::IsNearlyEqual(Pawn->GetHealht(),Pawn->GetMaxHealht())) { return false; }
+
+	if(Pawn->GetHealht() < Pawn->GetMaxHealht())
+	{
+		if((Pawn->GetMaxHealht() - Pawn->GetHealht()) <= AddHealth)
+		{
+			Pawn->SetHealht(Pawn->GetMaxHealht());
+			return true;
+		}
+		if ((Pawn->GetMaxHealht() - Pawn->GetHealht()) > AddHealth)
+		{
+			Pawn->SetHealht(Pawn->GetHealht() + AddHealth);
+			return true;
+		}
+	}
+	return false;
 }
