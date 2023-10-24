@@ -34,11 +34,18 @@ void ABasePickUp::Tick(float DeltaTime)
 
 }
 
+bool ABasePickUp::GivePickupTo(APawn* Drone)
+{
+	return false;
+}
+
+
 void ABasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorBeginOverlap(OtherActor);
+
 	ADrone* Drone = Cast<ADrone>(OtherActor);
-	if (Drone)
+	if (GivePickupTo(Drone))
 	{
 		PickupWasTaken();
 	}

@@ -13,5 +13,7 @@ UCLASS()
 class DRONEGAME_API AAmmoPickUp : public ABasePickUp
 {
 	GENERATED_BODY()
-	
+
+private:
+	virtual bool GivePickupTo(APawn* Drone) override;
 };
