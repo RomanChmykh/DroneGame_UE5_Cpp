@@ -2,10 +2,11 @@
 
 
 #include "BasePickUp.h"
+#include "Drone.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogBasePickUp, All, All)
 
 ABasePickUp::ABasePickUp()
 {
@@ -36,8 +37,25 @@ void ABasePickUp::Tick(float DeltaTime)
 void ABasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorBeginOverlap(OtherActor);
-	UE_LOG(LogBasePickUp, Warning, TEXT("PickUpWasTaken!"))
-	Destroy();
+	ADrone* Drone = Cast<ADrone>(OtherActor);
+	if (Drone)
+	{
+		PickupWasTaken();
+	}
 }
 
+void ABasePickUp::PickupWasTaken()
+{
+	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	GetRootComponent()->SetVisibility(false, true);
+
+	FTimerHandle RespawnTimerHandle;
+	GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ABasePickUp::RespawnPickup, RespawnTime);
+}
+
+void ABasePickUp::RespawnPickup()
+{
+	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+	GetRootComponent()->SetVisibility(true, true);
+}
 
