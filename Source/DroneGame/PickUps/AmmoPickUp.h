@@ -13,6 +13,10 @@ class DRONEGAME_API AAmmoPickUp : public ABasePickUp
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Parameters", meta = (ClampMin = "1.0", ClampMax = "100.0"))
+	float AddAmmo = 15.0;
+
 private:
 	virtual bool GivePickupTo(ADrone* Pawn) override;
 };
