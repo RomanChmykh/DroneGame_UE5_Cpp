@@ -17,8 +17,14 @@ class DRONEGAME_API ATurret : public APawn
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
 	ATurret();
+
+	UFUNCTION(BlueprintCallable)
+	float GetHealht() const { return Healht; }
+	void  SetHealht(float HealthValue) { Healht = HealthValue; }
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsDestroyed() const { return IsDestroyed; }
 
 protected:
 	
@@ -42,6 +48,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Parameters")
 	float ShootingInterval = 0.2f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Healht")
+	float MaxHealht = 100.0f;
+
 
 public:	
 	
@@ -57,5 +66,6 @@ protected:
 	void SeeDrone(APawn* SeeDrone);
 
 private:
-	
+	float Healht = 0.0f;
+	bool IsDestroyed = false;
 };

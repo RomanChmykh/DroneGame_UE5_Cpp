@@ -34,7 +34,8 @@ ATurret::ATurret()
 void ATurret::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Healht = MaxHealht;
 }
 
 // Called every frame
