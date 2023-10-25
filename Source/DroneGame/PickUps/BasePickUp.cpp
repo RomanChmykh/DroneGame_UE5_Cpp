@@ -45,7 +45,7 @@ void ABasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)
 	Super::NotifyActorBeginOverlap(OtherActor);
 
 	ADrone* Drone = Cast<ADrone>(OtherActor);
-	if (Drone)
+	if (Drone && !(Drone->GetIsDead()))
 	{
 		if (GivePickupTo(Drone))
 		{
