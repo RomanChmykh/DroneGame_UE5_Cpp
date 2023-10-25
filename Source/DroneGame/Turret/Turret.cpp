@@ -11,16 +11,20 @@
 #include "GameFramework/Pawn.h"
 #include "Kismet/GameplayStatics.h"
 
-// Sets default values
+
+DEFINE_LOG_CATEGORY_STATIC(Turret, All, All)
+
 ATurret::ATurret()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>("SceneComponent");
 	RootComponent = SceneComponent;
+	
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
 	StaticMeshComponent->SetupAttachment(GetRootComponent());
+	StaticMeshComponent->OnComponentBeginOverlap.AddDynamic(this, &ATurret::GetDamageFromBullet);
 
 
 	ArrowComponent = CreateDefaultSubobject<UArrowComponent>("ArrowComponent");
@@ -60,23 +64,46 @@ void ATurret::Shoot()
 
 void ATurret::SeeDrone(APawn* SeeDrone)
 {
-	const ADrone* Drone = Cast<ADrone>(SeeDrone);
-	if(Drone)
+	if (!IsDestroyed)
 	{
-		if (!(Drone->GetIsDead()))
+		const ADrone* Drone = Cast<ADrone>(SeeDrone);
+		if (Drone)
 		{
-			const FVector DroneLocation = Drone->GetActorLocation();
+			if (!(Drone->GetIsDead()))
+			{
+				const FVector DroneLocation = Drone->GetActorLocation();
 
-			const FVector TurretLocation = this->GetActorLocation();
-			const FVector DirectionToDrone = (DroneLocation - TurretLocation).GetSafeNormal();
-			const FRotator TurretRotation = FRotationMatrix::MakeFromX(DirectionToDrone).Rotator();
+				const FVector TurretLocation = this->GetActorLocation();
+				const FVector DirectionToDrone = (DroneLocation - TurretLocation).GetSafeNormal();
+				const FRotator TurretRotation = FRotationMatrix::MakeFromX(DirectionToDrone).Rotator();
 
-			this->SetActorRotation(TurretRotation);
+				this->SetActorRotation(TurretRotation);
 
-			//Do delay after each shot
-			FTimerHandle ShootTimerHandle;
-			GetWorldTimerManager().SetTimer(ShootTimerHandle, this, &ATurret::Shoot, ShootingInterval, false);
+				//Do delay after each shot
+				FTimerHandle ShootTimerHandle;
+				GetWorldTimerManager().SetTimer(ShootTimerHandle, this, &ATurret::Shoot, ShootingInterval, false);
+			}
 		}
 	}
 }
+//it logic start when turret BeginOverLap bullet which drone shoot
+void ATurret::GetDamageFromBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	ABaseBullet* BulletThatDamage = Cast<ABaseBullet>(OtherActor);
+
+	if (BulletThatDamage)
+	{
+		float HealhtAfterDamage = this->GetHealht() - BulletThatDamage->GetDamageValue();
+
+		if (HealhtAfterDamage >= 0.0f)
+		{
+			this->Healht = HealhtAfterDamage;
+		}
+		if (Healht == 0.0)
+		{
+			IsDestroyed = true;
+		}
+	}
+}
+
 

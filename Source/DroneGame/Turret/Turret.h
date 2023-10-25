@@ -21,10 +21,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetHealht() const { return Healht; }
+	UFUNCTION(BlueprintCallable)
 	void  SetHealht(float HealthValue) { Healht = HealthValue; }
 
 	UFUNCTION(BlueprintCallable)
 	bool GetIsDestroyed() const { return IsDestroyed; }
+	UFUNCTION(BlueprintCallable)
+	void SetIsDestroyed(bool IsDestroyedValue)  { IsDestroyed = IsDestroyedValue; }
 
 protected:
 	
@@ -64,6 +67,12 @@ protected:
 
 	UFUNCTION()
 	void SeeDrone(APawn* SeeDrone);
+
+
+private:
+
+	UFUNCTION()
+	void GetDamageFromBullet(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 private:
 	float Healht = 0.0f;
