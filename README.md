@@ -1,5 +1,5 @@
 # "Drone Game" Using only C++
-__
+_________________________________________________________
 ## About game
 ### Drone Game is a First-Person game, where the drone is controlled by the user and turret is controlled by AI. The user must destroy turret.
 ### Game have 1 levels (main level).
