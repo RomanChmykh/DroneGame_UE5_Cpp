@@ -114,6 +114,10 @@ void ADrone::GetDamageFromBullet(UPrimitiveComponent* OverlappedComp, AActor* Ot
 		{
 			this->Healht = HealhtAfterDamage;
 		}
+		else
+		{
+			Healht = 0;
+		}
 		if(Healht==0.0)
 		{
 			IsDead = true;
