@@ -93,7 +93,7 @@ void ADrone::LookY(float Amount)
 
 void ADrone::Shoot()
 {
-	if (Ammo > 0)
+	if ((Ammo > 0) && (Healht!=0.0))
 	{
 		GetWorld()->SpawnActor<AActor>(SpawnBullet, this->CameraComponent->GetComponentLocation(), GetActorRotation());
 		Ammo--;
